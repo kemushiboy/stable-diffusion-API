@@ -18,12 +18,12 @@ stability_api = client.StabilityInference(
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=["POST"])
 def generate():
-    req = request.args
-    propmt = req.get("prompt", "")
+    req = request.form
+    prompt = req.get("prompt", "")
     answers = stability_api.generate(
-        prompt=propmt
+        prompt=prompt
     )
     for resp in answers:
         for artifact in resp.artifacts:
