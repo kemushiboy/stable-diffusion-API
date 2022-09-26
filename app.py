@@ -39,7 +39,7 @@ translation = from_lang.get_translation(to_lang)
 @app.route("/", methods=["POST"])
 def generate():
     req = request.form
-    name = req.get("name  ")
+    name = req.get("name")
     gender = req.get("gender")
     age = req.get("age")
     country_name = req.get("country")
