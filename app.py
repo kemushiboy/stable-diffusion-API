@@ -35,13 +35,27 @@ to_lang = list(filter(
 	installed_languages))[0]
 translation = from_lang.get_translation(to_lang)
 
-
+#Japanese
 @app.route("/", methods=["POST"])
 def generate():
     req = request.form
-    prompt = req.get("prompt", "")
+    name = req.get("name  ")
+    gender = req.get("gender")
+    age = req.get("age")
+    country_name = req.get("country")
+    if country_name == "":
+        country_name = "日本"
+    country = translation.translate(country_name+"人")
+    address = translation.translate(req.get("address"))
+    born = translation.translate(req.get("born"))
+    marriage = req.get("marriage")
+    creed = req.get("creed")
+    
+    prompt = "A portrait of " + country + " " + gender +", named " + name  + ", at age of " + age + ", living in " +address + ", born in " + born + ", " + marriage + ", " + creed + ", taken with Canon 5D Mk4 with no background."
+    print(prompt)
+    
     answers = stability_api.generate(
-        prompt=translation.translate(prompt)
+        prompt=prompt
     )
     for resp in answers:
         for artifact in resp.artifacts:
