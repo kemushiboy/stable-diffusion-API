@@ -8,6 +8,7 @@ from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from flask import Flask, request, send_file
 
+import argostranslate.package, argostranslate.translate
 
 load_dotenv()
 stability_api = client.StabilityInference(
@@ -17,13 +18,30 @@ stability_api = client.StabilityInference(
 
 app = Flask(__name__)
 
+from_code = "ja"
+to_code = "en"
+
+#install Argos Translate package
+download_path = "translate-ja_en.argosmodel"
+argostranslate.package.install_from_path(download_path)
+
+# Translate Settings
+installed_languages = argostranslate.translate.get_installed_languages()
+from_lang = list(filter(
+	lambda x: x.code == from_code,
+	installed_languages))[0]
+to_lang = list(filter(
+	lambda x: x.code == to_code,
+	installed_languages))[0]
+translation = from_lang.get_translation(to_lang)
+
 
 @app.route("/", methods=["POST"])
 def generate():
     req = request.form
     prompt = req.get("prompt", "")
     answers = stability_api.generate(
-        prompt=prompt
+        prompt=translation.translate(prompt)
     )
     for resp in answers:
         for artifact in resp.artifacts:
