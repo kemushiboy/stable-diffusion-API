@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 from stability_sdk import client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 from flask import Flask, request, send_file, make_response
+from flask_cors import CORS
 from waitress import serve 
 
 import argostranslate.package, argostranslate.translate
@@ -29,6 +30,7 @@ stability_api = client.StabilityInference(
 )
 
 app = Flask(__name__)
+CORS(app)
 
 from_code = "ja"
 to_code = "en"
@@ -117,7 +119,7 @@ def generate(language):
                 warnings.warn(
                     "Your request activated the API's safety filters and could not be processed."
                     "Please modify the prompt and try again.")
-                return textResponse("不適切な入力を検知しました\nDetected non safe input.")
+                return errorTextResponse("不適切な入力を検知しました\nDetected non safe input.", 400)
                 
             if artifact.type == generation.ARTIFACT_IMAGE:
                 #Upload to S3
@@ -131,12 +133,10 @@ def generate(language):
                     io.BytesIO(artifact.binary),
                     mimetype='image/png'
                 )
-    return textResponse("サーバーエラー\nServer error.")
 
-def textResponse(text):
+def errorTextResponse(text,code):
     response = make_response(text)
-    response.mimetype = "text/plain"
-    return response
+    return response, code
 
 if __name__ == "__main__":
     print("start app.py")
