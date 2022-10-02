@@ -135,8 +135,9 @@ def generate(language):
                 )
 
 def errorTextResponse(text,code):
-    response = make_response(text)
-    return response, code
+    response = make_response(text,code)
+    response.statusText = "Detected non safe input."
+    return response
 
 if __name__ == "__main__":
     print("start app.py")
