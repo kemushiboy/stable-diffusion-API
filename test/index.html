@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>portrait generator</title>
+    <link rel="stylesheet" href="./destyle.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="lang">
+        <a href="./en.html">English</a>
+      </div>
+      <div class="container">
+        <form class="form" id="form">
+          <div>
+            <label class="label" for="name" data-required>名前</label>
+            <input id="name" type="text" name="name" required />
+          </div>
+
+          <div>
+            <label class="label" for="age" data-required>年齢</label>
+            <input id="age" type="number" name="age" required />
+          </div>
+
+          <div>
+            <label class="label" for="gender">性別</label>
+            <div class="select-container">
+              <select id="gender" name="gender">
+                <option value="woman">女性</option>
+                <option value="man">男性</option>
+                <option value="">その他</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="label" for="country">国籍(日本以外の場合)</label>
+            <input id="country" type="text" name="country" />
+          </div>
+
+          <div>
+            <label class="label" for="address" data-required>現住所</label>
+            <input id="address" type="text" name="address" required />
+          </div>
+
+          <div>
+            <label class="label" for="born" data-required>出身地</label>
+            <input id="born" type="text" name="born" required />
+          </div>
+
+          <div>
+            <label class="label" for="marriage">婚姻</label>
+            <div class="select-container">
+              <select id="marriage" name="marriage">
+                <option value="unmarried">未婚</option>
+                <option value="married">既婚</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="label" for="occupation" data-required>職業</label>
+            <input id="occupation" type="text" name="occupation" required />
+          </div>
+
+          <div>
+            <label class="label" for="favorite" data-required>趣味</label>
+            <input id="favorite" type="text" name="favorite" required />
+          </div>
+
+          <div>
+            <label class="label" for="personality" data-required>性格</label>
+            <input id="personality" type="text" name="personality" required />
+          </div>
+
+          <div>
+            <label class="label" for="creed">信条</label>
+            <div class="select-container">
+              <select id="creed" name="creed">
+                <option value="centrist">中道</option>
+                <option value="conservatist">保守</option>
+                <option value="liberalist">リベラル</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="privacy-policy">
+            プライバシーポリシー<br />
+            本ウェブサイト制作者（以下，「作者」といいます。）は，本ウェブサイト上（以下,「本サイト」といいます。）における，ユーザーの情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。<br />
+            第1条（個人情報）<br />
+            「個人情報」とは，個人情報保護法にいう「個人情報」を指すものとし，生存する個人に関する情報であって，当該情報に含まれる氏名，生年月日，住所，電話番号，連絡先その他の記述等により特定の個人を識別できる情報及び容貌，指紋，声紋にかかるデータ，及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。<br />
+            第2条（情報の収集方法）<br />
+            本サイトを利用するにあたり，ユーザーに氏名・住所などの個人情報と、性別・年齢などの属性情報の入力を求めています。<br />
+            第3条（情報を収集・利用する目的）<br />
+            収集した個人情報は、本サイトにおける画像生成機能のみに利用されます。個人情報はサーバー上に保存せず、削除されます。<br />
+            個人情報ではない、収集した属性情報と生成された画像はサーバーに保存され、作者が自由に利用できるものとします。<br />
+            第4条（情報の第三者提供）<br />
+            本サイトにおいて個人情報はサーバーに保存せず削除されるため、第三者へ提供することはありません。<br />
+            個人情報ではない、収集した属性情報と生成された画像は第三者へ譲渡・販売する場合があります。<br />
+            第5条（自己に関する情報の開示）<br />
+            本サイトにおいて個人情報はサーバーに保存せず削除され、また属性情報と生成された画像は個人を特定できない状態で保存されるため、自己に関する情報の開示はできません。<br />
+            <br />
+            2022/09/29 制定<br />
+          </div>
+
+          <button type="submit" class="button">生成する</button>
+        </form>
+
+        <div class="information">
+          <a href="./statement.html" target="_blank" rel="noopener noreferrer"
+            >Statement</a
+          >
+
+          <small
+            >&copy; 2022
+            <a
+              href="https://kemushiboy.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Ishikawa Tatsuya</a
+            ></small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="loading" id="loading" data-show="false">
+      <div class="spinner-box">
+        <div class="three-quarter-spinner"></div>
+      </div>
+    </div>
+    <div class="complete" id="complete" data-show="false">
+      <div class="complete-container">
+        <div class="close" id="result-close">✗</div>
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+    <div class="error" id="error" data-show="false">Failed...</div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
