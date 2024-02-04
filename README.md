@@ -17,23 +17,20 @@ download .env from https://drive.google.com/file/d/18dR3H-CY4tezkiQXwsF6XKOxoZde
 $ python3 -m venv pyenv
 $ source pyenv/bin/activate
 $ pyenv/bin/pip3 install -r requirements.txt
-
 $ flask run -p 8000
-```
 別のターミナルウィンドを開く
 $ python3 -m http.server 80 -d stable-diffusion-API/test   
 Go to http://localhost
-
+```
 ## Run on Docker
 
 ```
 $ docker build --platform linux/amd64 ./ -t sdapi
 docker desktopからimages -> sdapi -> runPorts Local Host 8000
-```
 別のターミナルウィンドを開く
 $ python3 -m http.server 80 -d stable-diffusion-API/test
 Go to http://localhost
-
+```
 ## 本番化
 ```
 AWSコンソールのAmazon Elastic Container Registryでプッシュコマンド表示
